@@ -1,0 +1,15 @@
+/node_modules
+/public/hot
+/public/storage
+/bootstrap/cache
+/storage
+/assets/images
+/assets/file
+/vendor
+/images
+/src/tests
+/tests
+.env
+.env.backup
+/src/bootstrap
+
