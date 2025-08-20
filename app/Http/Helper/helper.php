@@ -74,7 +74,7 @@ if (!function_exists('frontend_section_data')) {
 if (!function_exists('show_image')) {
     function show_image($image, $size = null)
     {
-        $file = (asset('public/assets/images/default.jpg'));
+        $file = (asset('assets/images/default.jpg'));
         if (file_exists($image) && is_file($image)) {
             $file = asset($image);
         } elseif ($size) {
