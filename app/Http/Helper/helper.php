@@ -76,7 +76,7 @@ if (!function_exists('show_image')) {
     {
         $file = (asset('public/assets/images/default.jpg'));
         if (file_exists($image) && is_file($image)) {
-            $file = asset('public/' . $image);
+            $file = asset($image);
         } elseif ($size) {
             $file = route('default.image', $size);
         }
