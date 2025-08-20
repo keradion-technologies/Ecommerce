@@ -1,0 +1,176 @@
+/* Customer Search Dropdown Styles - No conflicts with existing CSS */
+
+.search-container {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e1e5e9;
+    border-radius: 6px;
+    font-size: 12px;
+    background-color: #ffffff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.customer-search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 4px;
+    display: none;
+}
+
+.customer-search-dropdown.show {
+    display: block;
+}
+
+.customer-item {
+    display: block;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333333;
+    border-bottom: 1px solid #f1f3f4;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.customer-item:last-child {
+    border-bottom: none;
+}
+
+.customer-item:hover {
+    background-color: #f8f9fa;
+    text-decoration: none;
+    color: #333333;
+}
+
+.customer-item:focus {
+    outline: none;
+    background-color: #e3f2fd;
+}
+
+.customer-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.customer-details {
+    font-size: 12px;
+    color: #666666;
+    line-height: 1.4;
+}
+
+.customer-phone {
+    display: block;
+}
+
+.customer-email {
+    display: block;
+    margin-top: 2px;
+}
+
+.no-results {
+    padding: 16px;
+    text-align: center;
+    color: #666666;
+    font-size: 14px;
+    font-style: italic;
+}
+
+/* Scrollbar styling for webkit browsers */
+.customer-search-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.customer-search-dropdown::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.customer-search-dropdown::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.customer-search-dropdown::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Loading state */
+.loading {
+    padding: 16px;
+    text-align: center;
+    color: #666666;
+    font-size: 14px;
+}
+
+.loading::after {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #e1e5e9;
+    border-top: 2px solid #0066cc;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 8px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .search-container {
+        max-width: 100%;
+    }
+
+    .customer-item {
+        padding: 14px 12px;
+    }
+}
+
+#customer-search-dropdown .list-group-item:not(.list-group-item-action) {
+    text-align: center;
+    padding: 24px 16px;
+    color: #6c757d;
+    font-size: 14px;
+    background-color: #f8f9fa;
+    border: none;
+    border-radius: 8px;
+    margin: 8px;
+}
+
+#customer-search-dropdown .no-results-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
