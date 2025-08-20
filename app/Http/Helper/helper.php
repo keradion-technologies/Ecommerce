@@ -89,21 +89,38 @@ if (!function_exists('show_image')) {
 if (!function_exists('store_file')) {
     function store_file($file, $location, $size = null, $removefile = null)
     {
-        if (!file_exists($location)) {
-            mkdir($location, 0755, true);
+        // Add public/ prefix if not present
+        if (!str_starts_with($location, 'public/')) {
+            $location = 'public/' . ltrim($location, '/');
         }
+
+        // Convert to absolute path
+        $absolutePath = base_path($location);
+
+        // Use absolute path for file operations
+        if (!file_exists($absolutePath)) {
+            mkdir($absolutePath, 0755, true);
+        }
+
         if ($removefile) {
-            if (file_exists($location . '/' . $removefile) && is_file($location . '/' . $removefile)) {
-                @unlink($location . '/' . $removefile);
+            $oldFileAbsolutePath = $absolutePath . '/' . $removefile;
+            if (file_exists($oldFileAbsolutePath) && is_file($oldFileAbsolutePath)) {
+                @unlink($oldFileAbsolutePath);
             }
         }
+
         $filename = uniqid() . time() . '.' . $file->getClientOriginalExtension();
         $image = Image::make(file_get_contents($file));
+
         if (isset($size)) {
             $size = explode('x', strtolower($size));
             $image->resize($size[0], $size[1]);
         }
-        $image->save($location . '/' . $filename);
+
+        // Save using absolute path
+        $image->save($absolutePath . '/' . $filename);
+
+        // Return just filename (or relative path without public/ for web access)
         return $filename;
     }
 }
