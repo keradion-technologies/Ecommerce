@@ -85,46 +85,29 @@ if (!function_exists('show_image')) {
 }
 
 
+
 //store file method
 if (!function_exists('store_file')) {
     function store_file($file, $location, $size = null, $removefile = null)
     {
-        // Add public/ prefix if not present
-        if (!str_starts_with($location, 'public/')) {
-            $location = 'public/' . ltrim($location, '/');
+        if (!file_exists($location)) {
+            mkdir($location, 0755, true);
         }
-
-        // Convert to absolute path
-        $absolutePath = base_path($location);
-
-        // Use absolute path for file operations
-        if (!file_exists($absolutePath)) {
-            mkdir($absolutePath, 0755, true);
-        }
-
         if ($removefile) {
-            $oldFileAbsolutePath = $absolutePath . '/' . $removefile;
-            if (file_exists($oldFileAbsolutePath) && is_file($oldFileAbsolutePath)) {
-                @unlink($oldFileAbsolutePath);
+            if (file_exists($location . '/' . $removefile) && is_file($location . '/' . $removefile)) {
+                @unlink($location . '/' . $removefile);
             }
         }
-
         $filename = uniqid() . time() . '.' . $file->getClientOriginalExtension();
         $image = Image::make(file_get_contents($file));
-
         if (isset($size)) {
             $size = explode('x', strtolower($size));
             $image->resize($size[0], $size[1]);
         }
-
-        // Save using absolute path
-        $image->save($absolutePath . '/' . $filename);
-
-        // Return just filename (or relative path without public/ for web access)
+        $image->save($location . '/' . $filename);
         return $filename;
     }
 }
-
 //remove a file
 if (!function_exists('remove_file')) {
     function remove_file($location, $removefile)
@@ -188,190 +171,190 @@ if (!function_exists('file_path')) {
     {
         $path['profile'] = [
             'admin' => [
-                'path' => 'assets/images/backend/profile',
+                'path' => 'public/assets/images/backend/profile',
                 'size' => '150x150'
             ],
             'user' => [
-                'path' => 'assets/images/frontend/profile',
+                'path' => 'public/assets/images/frontend/profile',
                 'size' => '150x150'
             ],
             'seller' => [
-                'path' => 'assets/images/backend/seller/profile',
+                'path' => 'public/assets/images/backend/seller/profile',
                 'size' => '150x150'
             ],
             'delivery_man' => [
-                'path' => 'assets/images/backend/delivery_man/profile',
+                'path' => 'public/assets/images/backend/delivery_man/profile',
                 'size' => '150x150'
             ]
         ];
         $path['product'] = [
             'featured' => [
-                'path' => 'assets/images/backend/product/featured',
+                'path' => 'public/assets/images/backend/product/featured',
                 'size' => '800x650'
             ],
 
             'attribute' => [
-                'path' => 'assets/images/backend/product/attribute'
+                'path' => 'public/assets/images/backend/product/attribute'
             ],
             'gallery' => [
-                'path' => 'assets/images/backend/product/gallery',
+                'path' => 'public/assets/images/backend/product/gallery',
                 'size' => '800x650'
             ]
         ];
 
         $path['digital_product'] = [
             'featured' => [
-                'path' => 'assets/images/backend/product/featured',
+                'path' => 'public/assets/images/backend/product/featured',
                 'size' => '400x250'
             ],
         ];
 
         $path['tutorials'] = [
             'seller' => [
-                'path' => 'assets/images/backend/tutorial/seller'
+                'path' => 'public/assets/images/backend/tutorial/seller'
             ],
         ];
 
         $path['frontend'] = [
-            'path' => 'assets/images/frontend',
+            'path' => 'public/assets/images/frontend',
         ];
         $path['onboarding_image'] = [
-            'path' => 'assets/images/app',
+            'path' => 'public/assets/images/app',
             'size' => '400x400',
         ];
 
 
         $path['testimonial'] = [
-            'path' => 'assets/images/testimonial',
+            'path' => 'public/assets/images/testimonial',
             'size' => '150x150'
         ];
 
 
         $path['category'] = [
-            'path' => 'assets/images/category',
+            'path' => 'public/assets/images/category',
             'size' => '200x200'
         ];
 
         $path['invoiceLogo'] = [
-            'path' => 'assets/images/backend/invoiceLogo',
+            'path' => 'public/assets/images/backend/invoiceLogo',
             'size' => '196x196'
         ];
         $path['newsLatter'] = [
-            'path' => 'assets/images/global/newsLatter',
+            'path' => 'public/assets/images/global/newsLatter',
             'size' => '450x500'
         ];
         $path['blog'] = [
-            'path' => 'assets/images/global/blog',
+            'path' => 'public/assets/images/global/blog',
             'size' => '1000x375'
         ];
         $path['withdraw'] = [
-            'path' => 'assets/images/backend/withdraw',
+            'path' => 'public/assets/images/backend/withdraw',
             'size' => '350x200'
         ];
         $path['delivery_man_kyc'] = [
-            'path' => 'assets/images/backend/delivery_man_kyc',
+            'path' => 'public/assets/images/backend/delivery_man_kyc',
         ];
         $path['seo_image'] = [
-            'path' => 'assets/images/backend/seo',
+            'path' => 'public/assets/images/backend/seo',
 
             'size' => '600x600'
         ];
         $path['brand'] = [
-            'path' => 'assets/images/backend/brand',
+            'path' => 'public/assets/images/backend/brand',
             'size' => '220x220'
         ];
         $path['shop_logo'] = [
-            'path' => 'assets/images/shoplogo',
+            'path' => 'public/assets/images/shoplogo',
             'size' => '220x220'
         ];
         $path['seller_site_logo'] = [
-            'path' => 'assets/images/sellerSiteLogo',
+            'path' => 'public/assets/images/sellerSiteLogo',
             'size' => '200x35'
         ];
         $path['seller_site_logo_sm'] = [
-            'path' => 'assets/images/sellerSiteLogo',
+            'path' => 'public/assets/images/sellerSiteLogo',
             'size' => '80x80'
         ];
         $path['shop_first_image'] = [
-            'path' => 'assets/images/shop',
+            'path' => 'public/assets/images/shop',
             'size' => '2800x700'
         ];
 
         $path['payment_method'] = [
-            'path' => 'assets/images/backend/paymentmethod',
+            'path' => 'public/assets/images/backend/paymentmethod',
             'size' => '200x200'
         ];
         $path['todays_deal_image'] = [
-            'path' => 'assets/images/todaysDeal',
+            'path' => 'public/assets/images/todaysDeal',
             'size' => '285x438'
         ];
         $path['fature_product'] = [
-            'path' => 'assets/images/featureProduct',
+            'path' => 'public/assets/images/featureProduct',
             'size' => '285x438'
         ];
 
         $path['site_logo'] = [
-            'path' => 'assets/images/backend/logoIcon',
+            'path' => 'public/assets/images/backend/logoIcon',
             'size' => '130x50',
         ];
 
         $path['loder_logo'] = [
-            'path' => 'assets/images/backend/logoIcon',
+            'path' => 'public/assets/images/backend/logoIcon',
             'size' => '200x200'
         ];
         $path['admin_site_logo'] = [
-            'path' => 'assets/images/backend/AdminLogoIcon',
+            'path' => 'public/assets/images/backend/AdminLogoIcon',
             'size' => '200x60'
         ];
         $path['ticket'] = [
-            'path' => 'assets/file/backend/ticket',
+            'path' => 'public/assets/file/backend/ticket',
         ];
 
         $path['seller_kyc'] = [
-            'path' => 'assets/file/backend/sellerKyc',
+            'path' => 'public/assets/file/backend/sellerKyc',
         ];
         $path['chat'] = [
-            'path' => 'assets/file/backend/chat',
+            'path' => 'public/assets/file/backend/chat',
         ];
         $path['attribute_value'] = [
-            'path' => 'assets/file/backend/attributevalue',
+            'path' => 'public/assets/file/backend/attributevalue',
         ];
         $path['favicon'] = [
             'size' => '128x128',
         ];
         $path['menu'] = [
-            'path' => 'assets/images/menu',
+            'path' => 'public/assets/images/menu',
             'size' => '100x100'
         ];
         $path['menu_banner'] = [
-            'path' => 'assets/images/menu/banner',
+            'path' => 'public/assets/images/menu/banner',
             'size' => '1900x190'
         ];
         $path['language'] = [
-            'path' => 'assets/images/language',
+            'path' => 'public/assets/images/language',
             'size' => '20x20'
         ];
         $path['shipping_method'] = [
 
-            'path' => 'assets/images/backend/shipping_method',
+            'path' => 'public/assets/images/backend/shipping_method',
             'size' => '45x20'
         ];
         $path['text_editor_file'] = [
 
-            'path' => 'assets/images/backend/text_editor_file',
+            'path' => 'public/assets/images/backend/text_editor_file',
             'size' => '45x20'
         ];
         $path['banner_image'] = [
-            'path' => 'assets/images/banner_image',
+            'path' => 'public/assets/images/banner_image',
             'size' => '1190x600'
         ];
 
         $path['campaign_banner'] = [
-            'path' => 'assets/images/backend/campaign_banner',
+            'path' => 'public/assets/images/backend/campaign_banner',
             'size' => '2800x525'
         ];
         $path['flash_deal'] = [
-            'path' => 'assets/images/backend/flash_deal',
+            'path' => 'public/assets/images/backend/flash_deal',
             'size' => '2800x525'
         ];
         return $path;
